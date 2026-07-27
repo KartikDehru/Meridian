@@ -1,4 +1,4 @@
-import { handler, ok, parseBody } from "@/lib/api";
+import { handler, ok, parseBody, NotFoundError } from "@/lib/api";
 import { requirePermission } from "@/lib/auth/guard";
 import {
   activitySchema,
@@ -6,13 +6,21 @@ import {
   deleteActivity,
   updateActivity,
 } from "@/modules/activities/service";
+import { isStudentEnrolled } from "@/modules/enrollment/service";
 
 export const GET = handler(async (_req, { params }) => {
   const session = await requirePermission("curriculum.read");
   const { id } = await params;
   const activity = await activityWithQuestions(id);
-  // Never leak answer keys to students.
   if (session.role === "STUDENT") {
+    // Students may only read published activities of enrolled courses —
+    // and never the answer keys.
+    if (
+      !activity.isPublished ||
+      !(await isStudentEnrolled(session.sub, activity.courseId))
+    ) {
+      throw new NotFoundError("Activity not found.");
+    }
     return ok({
       ...activity,
       questions: activity.questions.map((q) => ({

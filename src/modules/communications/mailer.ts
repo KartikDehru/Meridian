@@ -26,12 +26,23 @@ function transporter() {
   });
 }
 
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+}
+
 export function renderTemplate(
   template: string,
   variables: Record<string, string | number>,
 ): string {
+  // Variable values are HTML-escaped: user-controlled data (names, titles)
+  // must never inject markup into emails. Template HTML itself is
+  // admin-authored and trusted.
   return template.replace(/\{\{\s*(\w+)\s*\}\}/g, (_, name: string) =>
-    name in variables ? String(variables[name]) : `{{${name}}}`,
+    name in variables ? escapeHtml(String(variables[name])) : `{{${name}}}`,
   );
 }
 

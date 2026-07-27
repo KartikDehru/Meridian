@@ -103,6 +103,21 @@ export async function coursesForStudent(studentUserId: string) {
   });
 }
 
+/** True when the given student user is enrolled in the course. */
+export async function isStudentEnrolled(
+  studentUserId: string,
+  courseId: string,
+): Promise<boolean> {
+  const profile = await db.studentProfile.findUnique({
+    where: { userId: studentUserId },
+  });
+  if (!profile) return false;
+  const enrollment = await db.enrollment.findUnique({
+    where: { studentId_courseId: { studentId: profile.id, courseId } },
+  });
+  return enrollment !== null;
+}
+
 /** Upsert lesson progress; marks COMPLETED and stamps completedAt. */
 export async function recordLessonProgress(
   studentUserId: string,
@@ -113,8 +128,23 @@ export async function recordLessonProgress(
     where: { userId: studentUserId },
   });
   if (!profile) throw new NotFoundError("Student profile not found.");
-  const lesson = await db.lesson.findUnique({ where: { id: lessonId } });
+  const lesson = await db.lesson.findUnique({
+    where: { id: lessonId },
+    include: { chapter: { select: { courseId: true } } },
+  });
   if (!lesson) throw new NotFoundError("Lesson not found.");
+
+  // Progress may only be recorded for lessons in courses the student is
+  // actually enrolled in.
+  const enrollment = await db.enrollment.findUnique({
+    where: {
+      studentId_courseId: {
+        studentId: profile.id,
+        courseId: lesson.chapter.courseId,
+      },
+    },
+  });
+  if (!enrollment) throw new NotFoundError("Lesson not found.");
 
   return db.lessonProgress.upsert({
     where: { studentId_lessonId: { studentId: profile.id, lessonId } },

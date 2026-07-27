@@ -25,12 +25,16 @@ export const GET = handler(async (req) => {
   }
 
   const classes = await listLiveClasses({ gradeLevel, upcomingOnly });
-  // Hide host-only fields from non-managers.
+  // Hide host-only fields from non-managers, and hide join credentials from
+  // students in list responses — they must use the /join endpoint, which is
+  // what records their attendance.
   const canManage = session.role === "ADMIN" || session.role === "SUPER_ADMIN";
   return ok(
     classes.map((c) => ({
       ...c,
       startUrl: canManage ? c.startUrl : undefined,
+      joinUrl: canManage ? c.joinUrl : undefined,
+      passcode: canManage ? c.passcode : undefined,
     })),
   );
 });

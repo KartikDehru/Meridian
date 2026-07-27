@@ -1,4 +1,4 @@
-import { handler, ok, parseBody } from "@/lib/api";
+import { handler, ok, parseBody, NotFoundError } from "@/lib/api";
 import { requirePermission } from "@/lib/auth/guard";
 import {
   courseSchema,
@@ -6,11 +6,19 @@ import {
   deleteCourse,
   updateCourse,
 } from "@/modules/curriculum/service";
+import { isStudentEnrolled } from "@/modules/enrollment/service";
 
 export const GET = handler(async (_req, { params }) => {
-  await requirePermission("curriculum.read");
+  const session = await requirePermission("curriculum.read");
   const { id } = await params;
-  return ok(await courseTree(id));
+  const course = await courseTree(id);
+  // Students may only read published courses they are enrolled in.
+  if (session.role === "STUDENT") {
+    if (!course.isPublished || !(await isStudentEnrolled(session.sub, course.id))) {
+      throw new NotFoundError("Course not found.");
+    }
+  }
+  return ok(course);
 });
 
 export const PATCH = handler(async (req, { params }) => {
