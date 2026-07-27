@@ -90,6 +90,7 @@ writes are fire-safe: a logging failure never breaks the user's request.
 - [ ] Point `DATABASE_URL` at Postgres with TLS and least-privilege
       credentials.
 - [ ] Rotate `AUTH_SECRET` on a schedule (invalidates all sessions).
-- [ ] The npm audit findings in this repo are confined to **dev-only** eslint
-      tooling (transitive `minimatch`/`brace-expansion`); no runtime
-      dependency is affected.
+- [ ] `npm audit --omit=dev` is clean (transitive `postcss`/`sharp` advisories
+      are patched via npm `overrides` in `package.json`); remaining findings
+      are confined to **dev-only** eslint tooling. See the full
+      [security audit report](security-audit.md).

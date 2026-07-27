@@ -57,10 +57,15 @@ Detailed docs live in [`docs/`](docs/):
 - [Roles & permissions](docs/roles-and-permissions.md) — the RBAC matrix
 - [API reference](docs/api-reference.md) — every `/api/v1` endpoint
 - [Security](docs/security.md) — threat model and hardening checklist
+- [Security audit](docs/security-audit.md) — findings, fixes and residual risks
 - [Theming](docs/theming.md) — design tokens and the two themes
 - [Zoom integration](docs/integrations/zoom.md) — S2S OAuth setup + manual mode
 - [Email integration](docs/integrations/email.md) — SMTP, templates, variables
 - [Deployment](docs/deployment.md) — Postgres, production hardening, scaling
+
+Working on the codebase with an AI agent (or joining as a new contributor)?
+Start with [`AGENTS.md`](AGENTS.md) — a condensed map of the architecture,
+conventions, security invariants and gotchas.
 
 ## Repository layout
 
