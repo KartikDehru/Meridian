@@ -58,6 +58,7 @@ Detailed docs live in [`docs/`](docs/):
 - [API reference](docs/api-reference.md) — every `/api/v1` endpoint
 - [Security](docs/security.md) — threat model and hardening checklist
 - [Security audit](docs/security-audit.md) — findings, fixes and residual risks
+- [Graph navigation](docs/graph-navigation.md) — InfraNodus graph plugin for in-file navigation
 - [Theming](docs/theming.md) — design tokens and the two themes
 - [Zoom integration](docs/integrations/zoom.md) — S2S OAuth setup + manual mode
 - [Email integration](docs/integrations/email.md) — SMTP, templates, variables

@@ -1,0 +1,16 @@
+{
+  "infranodus.contentToSend": "auto",
+  "infranodus.graphView.autoLoadActiveEditor": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.formatOnSave": false,
+  "files.exclude": {
+    "**/.next": true,
+    "**/node_modules": true,
+    "**/*.tsbuildinfo": true
+  },
+  "search.exclude": {
+    "**/.next": true,
+    "**/node_modules": true,
+    "**/prisma/*.db": true
+  }
+}

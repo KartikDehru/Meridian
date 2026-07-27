@@ -104,6 +104,14 @@ Prisma. Client components mutate exclusively through `/api/v1` using the
 
 See `docs/security.md` and `docs/security-audit.md` for the full picture.
 
+
+## Graph navigation plugin
+
+This repo recommends the **InfraNodus Graph View** extension
+(`infranodus.infranodus-graph-view`) for navigating symbols/topics as a
+graph. See [`docs/graph-navigation.md`](docs/graph-navigation.md). Cursor
+will prompt you to install it via `.vscode/extensions.json`.
+
 ## Gotchas
 
 - **SQLite + Prisma**: `options`, `answers`, `variables`, `meta` are JSON
