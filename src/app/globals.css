@@ -1,0 +1,178 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Meridian LMS design tokens.
+
+   Two minimal themes (docs/theming.md):
+   - "meadow" (default): green & white
+   - "mono":  black & white
+--------------------------------------------------------------------------- */
+
+:root {
+  --background: #f8faf9;
+  --surface: #ffffff;
+  --surface-hover: #f1f5f3;
+  --foreground: #101613;
+  --muted: #5f6d66;
+  --border: #e3e9e5;
+  --primary: #059669;
+  --primary-hover: #047857;
+  --primary-foreground: #ffffff;
+  --primary-soft: #e7f6ef;
+  --accent: #10b981;
+  --danger: #dc2626;
+  --danger-soft: #fdecec;
+  --warning: #d97706;
+  --warning-soft: #fdf3e3;
+  --info: #0284c7;
+  --info-soft: #e6f4fb;
+  --chart-1: #059669;
+  --chart-2: #34d399;
+  --chart-3: #065f46;
+  --chart-grid: #e3e9e5;
+  --ring: rgba(5, 150, 105, 0.35);
+  --shadow: 0 1px 2px rgba(16, 22, 19, 0.05);
+}
+
+[data-theme="mono"] {
+  --background: #0a0a0a;
+  --surface: #141414;
+  --surface-hover: #1d1d1d;
+  --foreground: #f5f5f5;
+  --muted: #9a9a9a;
+  --border: #262626;
+  --primary: #f5f5f5;
+  --primary-hover: #d4d4d4;
+  --primary-foreground: #0a0a0a;
+  --primary-soft: #1f1f1f;
+  --accent: #e5e5e5;
+  --danger: #f87171;
+  --danger-soft: #2a1616;
+  --warning: #fbbf24;
+  --warning-soft: #2a2312;
+  --info: #7dd3fc;
+  --info-soft: #12222a;
+  --chart-1: #f5f5f5;
+  --chart-2: #8a8a8a;
+  --chart-3: #4a4a4a;
+  --chart-grid: #262626;
+  --ring: rgba(245, 245, 245, 0.35);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+  --color-accent: var(--accent);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  color-scheme: light;
+}
+
+html[data-theme="mono"] {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  border-color: var(--border);
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* Focus rings */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 1px;
+}
+
+/* Theme toggle icons: visibility driven by the active theme */
+.theme-icon-mono {
+  display: none;
+}
+[data-theme="mono"] .theme-icon-mono {
+  display: inline-flex;
+}
+[data-theme="mono"] .theme-icon-meadow {
+  display: none;
+}
+
+/* Thin scrollbars for a minimal look */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 8px;
+}
+
+/* Simple prose styling for lesson articles */
+.prose-lesson {
+  line-height: 1.75;
+}
+.prose-lesson h1,
+.prose-lesson h2,
+.prose-lesson h3 {
+  font-weight: 600;
+  margin: 1.25em 0 0.5em;
+}
+.prose-lesson h1 {
+  font-size: 1.5rem;
+}
+.prose-lesson h2 {
+  font-size: 1.25rem;
+}
+.prose-lesson h3 {
+  font-size: 1.1rem;
+}
+.prose-lesson p {
+  margin: 0.75em 0;
+}
+.prose-lesson ul,
+.prose-lesson ol {
+  margin: 0.75em 0;
+  padding-left: 1.5em;
+}
+.prose-lesson ul {
+  list-style: disc;
+}
+.prose-lesson ol {
+  list-style: decimal;
+}
+.prose-lesson code {
+  background: var(--primary-soft);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.9em;
+}
+.prose-lesson strong {
+  font-weight: 600;
+}
